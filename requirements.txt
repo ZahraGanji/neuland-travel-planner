@@ -1,0 +1,26 @@
+# --- Core AI Framework ---
+langchain
+langchain-openai
+
+# --- Vector Store ---
+faiss-cpu
+
+# --- Embedding Model Dependencies ---
+tiktoken
+sentence-transformers
+
+# --- API & Environment Management ---
+requests
+python-dotenv
+
+# --- Optional / Bonus Points ---
+# Web UI Framework
+flask
+
+# FastAPI server
+fastapi
+uvicorn
+
+# --- General Utilities ---
+numpy
+matplotlib
