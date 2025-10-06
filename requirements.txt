@@ -1,13 +1,13 @@
 # --- Core AI Framework ---
 langchain
 langchain-openai
-
+langchain-huggingface
 # --- Vector Store ---
 faiss-cpu
 
-# --- Embedding Model Dependencies ---
-tiktoken
+# --- Embedding Model Dependency ---
 sentence-transformers
+tiktoken
 
 # --- API & Environment Management ---
 requests
@@ -24,3 +24,5 @@ uvicorn
 # --- General Utilities ---
 numpy
 matplotlib
+torch
+accelerate
