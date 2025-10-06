@@ -17,3 +17,6 @@ def load_api_keys():
         raise ValueError("OPENWEATHERMAP_API_KEY is not set in environment variables.")
     
     return huggingface_api_token, openweathermap_api_key
+
+# Load keys at the module level for easy import
+HUGGINGFACE_TOKEN, OPENWEATHERMAP_KEY = load_api_keys()
