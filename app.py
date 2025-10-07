@@ -1,6 +1,6 @@
 import streamlit as st
 from src.travel_planner.agent import run_agent
-from src.travel_planner.vector_store import vector_store_exists, build_vector_store
+from src.travel_planner.vector_store import vector_store_exists, create_vector_store
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -21,4 +21,3 @@ st.markdown(
     "Ask about Twain's journey, his opinions, or get the current weather for any destination!"
 )
 
-# --- Vector Store Build Button ---

@@ -84,9 +84,3 @@ def ask_book_tool():
     return tool
 
 
-# Instantiate the book tool
-book_tool = ask_book_tool()
-
-# list of all tools that will be available to the AI agent.
-# The agent will decide which one to use based on the user's query and the 'description' of each tool.
-tools = [weather_tool, book_tool]

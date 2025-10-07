@@ -7,7 +7,7 @@ def load_api_keys():
     load_dotenv()
 
     # Get the Hugging Face API token
-    huggingface_api_token = os.getenv("HUGGINGFACE_API_TOKEN")
+    huggingface_api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
     if not huggingface_api_token:
         raise ValueError("HUGGINGFACE_API_TOKEN is not set in environment variables.")
     

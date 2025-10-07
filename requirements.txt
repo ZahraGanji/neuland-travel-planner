@@ -1,30 +1,21 @@
-# --- Core AI Framework ---
+
+# Core AI and Web Framework
 langchain
-langchain-openai
 langchain-huggingface
-
-# --- Vector Store ---
+streamlit
+langchain_community
+# Vector Store & Embeddings
 faiss-cpu
-
-# --- Embedding Model Dependency ---
 sentence-transformers
-tiktoken
-
-# --- API & Environment Management ---
-requests
-python-dotenv
-
-# --- Optional / Bonus Points ---
-# Web UI Framework
-flask
-
-# FastAPI server
-fastapi
-uvicorn
-
-# --- General Utilities ---
-numpy
-matplotlib
-torch
 accelerate
+
+# Utilities
+python-dotenv
+requests
+
 huggingface_hub
+
+# Testing
+pytest
+pytest-mock
+requests-mock

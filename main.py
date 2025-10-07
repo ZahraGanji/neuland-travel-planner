@@ -1,5 +1,5 @@
 import argparse
-from travel_planner.agent import run_agent
+from src.travel_planner.agent import run_agent
 
 
 def main():

@@ -1,8 +1,8 @@
 import os
 from langchain_community.document_loaders import TextLoader
-from longchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import CharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from logging_community.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 
 BOOK_PATH = 'data/innocents_abroad_clean.txt'
 VECTOR_STORE_PATH = 'data/vector_store'
@@ -66,7 +66,7 @@ def load_vector_store():
     
     print("Loading vector store...")
     embeddings = get_embeddings_model()
-    database = FAISS.load_local(VECTOR_STORE_PATH, embeddings)
+    database = FAISS.load_local(VECTOR_STORE_PATH, embeddings, allow_dangerous_deserialization=True)
     print("Vector store loaded successfully.")
     return database
 
