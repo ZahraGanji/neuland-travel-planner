@@ -61,7 +61,7 @@ def load_vector_store():
     Returns:
         FAISS: The loaded vector store object, or None if it doesn't exist.
     """
-    if not os.path.exists(os.path.join(VECTOR_STORE_PATH, "index.faiss")):
+    if not vector_store_exists():
         raise FileNotFoundError(f"Vector store index files were not found in disk. Please create it first.")
     
     print("Loading vector store...")
@@ -69,3 +69,13 @@ def load_vector_store():
     database = FAISS.load_local(VECTOR_STORE_PATH, embeddings)
     print("Vector store loaded successfully.")
     return database
+
+def vector_store_exists():
+   """
+   Checks if the FAISS vector store index files exist on disk.
+
+
+   Returns:
+       bool: True if the index exists, False otherwise.
+   """
+   return os.path.exists(VECTOR_STORE_PATH) and os.path.exists(os.path.join(VECTOR_STORE_PATH, "index.faiss"))
