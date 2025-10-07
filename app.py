@@ -14,4 +14,11 @@ st.set_page_config(
 if 'vector_store_built' not in st.session_state:
     st.session_state.vector_store_built = vector_store_exists()
 
+# --- UI Components ---
+st.title("✈️ Twain Travel Agent")
+st.markdown(
+    "Your AI-powered assistant for planning travels inspired by Mark Twain's *The Innocents Abroad*. "
+    "Ask about Twain's journey, his opinions, or get the current weather for any destination!"
+)
 
+# --- Vector Store Build Button ---
