@@ -21,3 +21,33 @@ st.markdown(
     "Ask about Twain's journey, his opinions, or get the current weather for any destination!"
 )
 
+# --- Vector Store Build Button ---
+if not st.session_state.vector_store_built:
+    st.warning("The knowledge base for the book has not been built yet. This is a one-time setup.")
+    if st.button("Build Knowledge Base"):
+        with st.spinner("Processing the book... This may take a few minutes."):
+            create_vector_store()
+            st.session_state.vector_store_built = True
+            st.success("Knowledge base built successfully!")
+            st.rerun() # to update the state
+
+# --- Main Application Logic ---
+if st.session_state.vector_store_built:
+    # Input field for user query
+    user_query = st.text_input("Ask your travel question:", placeholder="e.g., What did Twain think of the Sphinx?")
+
+    if st.button("Ask the Agent"):
+        if user_query:
+            with st.spinner("The agent is thinking..."):
+                try:
+                    # Run the agent with the user's query
+                    result = run_agent(user_query)
+                    
+                    # Display the final answer
+                    st.success("Here's the agent's answer:")
+                    st.write(result.get("output"))
+
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+        else:
+            st.warning("Please enter a question.")
