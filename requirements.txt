@@ -2,6 +2,7 @@
 langchain
 langchain-openai
 langchain-huggingface
+
 # --- Vector Store ---
 faiss-cpu
 
@@ -26,3 +27,4 @@ numpy
 matplotlib
 torch
 accelerate
+huggingface_hub
