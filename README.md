@@ -120,7 +120,7 @@ python main.py "What did Mark Twain think about the Sphinx?"
 # Use both tools in sequence
 python main.py "I want to visit the places Twain went to in Italy — what's the weather like there now?"
 
-# Test the out-of-scope guardrail
+# Test the out-of-scope question
 python main.py "Explain quantum physics"
 ```
 
