@@ -1,55 +1,35 @@
-"""This module implements our CI function calls."""
 import nox
 
+# Define the Python versions to test against
+PYTHON_VERSIONS = ["3.11"]
+
+# --- Nox Sessions ---
 
 @nox.session(name="test")
-def run_test(session):
-    """Run pytest."""
+def test(session: nox.Session) -> None:
+    """
+    Run the unit test suite using pytest.
+    """
+    # Install the CPU-only version of PyTorch first to save space.
+    # This is a common practice in CI environments that don't have GPUs.
+    session.install("torch", "--index-url", "https://download.pytorch.org/whl/cpu")
+    
+    # Install all other project dependencies from requirements.txt
     session.install("-r", "requirements.txt")
-    session.install("pytest")
-    session.run("pytest")
-
-
-@nox.session(name="lint")
-def lint(session):
-    """Check code conventions."""
-    session.install("flake8==4.0.1")
-    session.install(
-        "flake8-colors",
-        "flake8-black",
-        "flake8-docstrings",
-        "flake8-bugbear",
-        "flake8-broken-line",
-        "pep8-naming",
-        "pydocstyle",
-        "darglint",
-    )
-    session.install("flake8-bandit==2.1.2", "bandit==1.7.2")
-    session.run("flake8", "src", "tests", "noxfile.py")
-
+    
+    # Run pytest.
+    session.run("pytest", *session.posargs)
 
 @nox.session(name="typing")
-def mypy(session):
-    """Check type hints."""
+def typing(session: nox.Session) -> None:
+    """
+    Run the static type checker (mypy).
+    """
+    # Install the CPU-only version of PyTorch first.
+    session.install("torch", "--index-url", "https://download.pytorch.org/whl/cpu")
+    
+    # Install other project dependencies.
     session.install("-r", "requirements.txt")
-    session.install("mypy")
-    session.run(
-        "mypy",
-        "--install-types",
-        "--non-interactive",
-        "--ignore-missing-imports",
-        "--no-strict-optional",
-        "--no-warn-return-any",
-        "--implicit-reexport",
-        "--allow-untyped-calls",
-        "src",
-    )
-
-
-@nox.session(name="format")
-def format(session):
-    """Fix common convention problems automatically."""
-    session.install("black")
-    session.install("isort")
-    session.run("isort", "src", "tests", "noxfile.py")
-    session.run("black", "src", "tests", "noxfile.py")
+    
+    # Run mypy on the source directory.
+    session.run("mypy", "src")

@@ -73,3 +73,40 @@ def test_get_current_weather_generic_network_error(mock_get):
     # Assert that the function catches the generic exception and returns a user-friendly message
     assert "An error occurred while fetching weather: Network is down" in result
 
+# --- PYTEST TEST FUNCTIONS for Book Tool ---
+
+@patch('src.travel_planner.tools.create_retriever_tool')
+@patch('src.travel_planner.tools.load_vector_store')
+def test_ask_book_tool_creation(mock_load_vector_store, mock_create_retriever_tool):
+    """
+    Tests the creation of the book tool.
+    Mocks the vector store loading and the final tool creation to verify
+    that the components are working correctly.
+    """
+    # --- Setup Mocks ---
+    # Create a mock vector store object and a mock retriever
+    mock_vector_store = MagicMock()
+    mock_retriever = MagicMock()
+    mock_vector_store.as_retriever.return_value = mock_retriever
+    
+    # Configure the mocked load_vector_store function to return our mock store
+    mock_load_vector_store.return_value = mock_vector_store
+
+    # --- Call Function ---
+    ask_book_tool()
+
+    # --- Assertions ---
+    # 1. Verify that our code attempted to load the vector store
+    mock_load_vector_store.assert_called_once()
+
+    # 2. Verify that it created a retriever from the store with the correct settings
+    mock_vector_store.as_retriever.assert_called_once_with(search_kwargs={"k": 3})
+
+    # 3. Verify that the final LangChain tool was created with the correct retriever,
+    #    name, and description, which are crucial for the agent's reasoning.
+    mock_create_retriever_tool.assert_called_once_with(
+        retriever=mock_retriever,
+        name="ask_book",
+        description="Finds and returns the most relevant passages from Mark Twain's book, 'The Innocents Abroad'. Useful for any questions about the content of the book 'The Innocents Abroad' by Mark Twain, Mark Twain's opinions, his travels, or the places and people he described."
+    )
+
