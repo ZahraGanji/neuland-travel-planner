@@ -102,7 +102,7 @@ streamlit run app.py
 You can also run the agent directly from your terminal.
 First, build the vector store (one-time step):
 ```bash
-python main.py --build
+python src/travel_planner/vector_store.py
 ```
 Then, ask a question:
 ```bash
