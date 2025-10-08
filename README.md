@@ -24,6 +24,7 @@ When you submit a query, the agent will:
 For **out-of-scope questions**, the agent is instructed to **politely decline**.
 
 ## Project Structure
+```markdown
 twain-travel-agent/
 │
 ├── .github/
@@ -54,3 +55,4 @@ twain-travel-agent/
 ├── .env.example # Template for environment variables (Hugging Face token and open weather map API key)
 ├── requirements.txt # Project dependencies
 └── README.md 
+```
