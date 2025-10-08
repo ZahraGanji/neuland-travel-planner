@@ -10,6 +10,7 @@ env.bak/
 venv.bak/
 
 # --- Python Artifacts ---
+__pycache__
 __pycache__/
 *.py[cod]
 *$py.class
