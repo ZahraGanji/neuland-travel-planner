@@ -19,3 +19,4 @@ huggingface_hub
 pytest
 pytest-mock
 requests-mock
+nox
