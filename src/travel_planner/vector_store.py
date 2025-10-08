@@ -89,3 +89,7 @@ def vector_store_exists():
     return os.path.exists(VECTOR_STORE_PATH) and os.path.exists(
         os.path.join(VECTOR_STORE_PATH, "index.faiss")
     )
+
+
+if __name__ == "__main__":
+   create_vector_store()
