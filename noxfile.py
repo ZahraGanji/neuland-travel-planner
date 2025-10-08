@@ -10,13 +10,10 @@ def test(session: nox.Session) -> None:
     """
     Run the unit test suite using pytest.
     """
-    # Install the CPU-only version of PyTorch first to save space.
-    # This is a common practice in CI environments that don't have GPUs.
-    session.install("torch", "--index-url", "https://download.pytorch.org/whl/cpu")
     
     # Install all other project dependencies from requirements.txt
     session.install("-r", "requirements.txt")
-    
+    session.install("pytest")
     # Run pytest.
     session.run("pytest", *session.posargs)
 
@@ -25,8 +22,6 @@ def typing(session: nox.Session) -> None:
     """
     Run the static type checker (mypy).
     """
-    # Install the CPU-only version of PyTorch first.
-    session.install("torch", "--index-url", "https://download.pytorch.org/whl/cpu")
     
     # Install other project dependencies.
     session.install("-r", "requirements.txt")
