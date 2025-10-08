@@ -1,4 +1,5 @@
 """This module implements our CI function calls."""
+
 import nox
 
 
@@ -19,7 +20,21 @@ def mypy(session):
     session.install("mypy")
     session.run(
         "mypy",
+        "--install-types",
+        "--non-interactive",
+        "--ignore-missing-imports",
+        "--no-strict-optional",
+        "--no-warn-return-any",
+        "--implicit-reexport",
+        "--allow-untyped-calls",
         "src",
     )
 
 
+@nox.session(name="format")
+def format(session):
+    """Fix common convention problems automatically."""
+    session.install("black")
+    session.install("isort")
+    session.run("isort", "src", "tests", "noxfile.py")
+    session.run("black", "src", "tests", "noxfile.py")

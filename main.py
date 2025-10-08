@@ -15,7 +15,7 @@ def main():
 
     # Print the final answer from the agent
     print("\nFinal Answer:")
-    print(result)
+    print(result.get("output"))
 
 
 

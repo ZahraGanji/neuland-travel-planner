@@ -1,7 +1,9 @@
-from dotenv import load_dotenv
 import os
 
-def load_api_keys():
+from dotenv import load_dotenv
+
+
+def load_huggingface_api_key():
 
     # Retrieve API keys from environment variables
     load_dotenv()
@@ -10,13 +12,18 @@ def load_api_keys():
     huggingface_api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
     if not huggingface_api_token:
         raise ValueError("HUGGINGFACE_API_TOKEN is not set in environment variables.")
-    
+
+    return huggingface_api_token
+
+
+def load_openweathermap_api_key():
+
+    # Retrieve API keys from environment variables
+    load_dotenv()
+
     # Get the OpenWeatherMap API key
     openweathermap_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if not openweathermap_api_key:
         raise ValueError("OPENWEATHERMAP_API_KEY is not set in environment variables.")
-    
-    return huggingface_api_token, openweathermap_api_key
 
-# Load keys at the module level for easy import
-HUGGINGFACE_TOKEN, OPENWEATHERMAP_KEY = load_api_keys()
+    return openweathermap_api_key

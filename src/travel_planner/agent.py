@@ -1,9 +1,11 @@
-from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+from langchain import hub
 from langchain.agents import AgentExecutor, create_structured_chat_agent
 from langchain.tools.render import render_text_description
-from langchain import hub
-from .tools import weather_tool, ask_book_tool
-from .config import HUGGINGFACE_TOKEN
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+
+from .config import load_huggingface_api_key
+from .tools import ask_book_tool, weather_tool
+
 
 def create_agent():
     """
@@ -24,19 +26,23 @@ def create_agent():
 
     If a user asks a question that is not related to the book or the weather (e.g., "Explain quantum physics" or "What is the capital of France?"), you absolutely MUST NOT use your own general knowledge. You must respond with a message similar to: "I'm sorry, I can only answer questions about Mark Twain's 'The Innocents Abroad' and current weather conditions."
     """
-        
+
     # Prepend the forceful instructions to the existing prompt template
-    prompt.messages[0].prompt.template = forceful_instructions + "\n\n" + prompt.messages[0].prompt.template
+    prompt.messages[0].prompt.template = (
+        forceful_instructions + "\n\n" + prompt.messages[0].prompt.template
+    )
 
     # Render the tools into a string format that the prompt template expects
     # and partially fill in the prompt with this information.
     tool_description = render_text_description(all_tools)
     tool_names = ", ".join([t.name for t in all_tools])
-    
+
     prompt = prompt.partial(
         tools=tool_description,
         tool_names=tool_names,
     )
+    # Load the Hugging Face API key from configuration
+    HUGGINGFACE_TOKEN = load_huggingface_api_key()
 
     # Initialize the Language Model from Hugging Face
     llm = HuggingFaceEndpoint(
@@ -50,16 +56,14 @@ def create_agent():
 
     # Create the structured chat agent, passing the wrapped chat_model
     agent = create_structured_chat_agent(chat_model, all_tools, prompt)
-    
+
     # Create the agent executor to run the agent
     agent_executor = AgentExecutor(
-        agent=agent, 
-        tools=all_tools, 
-        verbose=True,
-        handle_parsing_errors=True 
+        agent=agent, tools=all_tools, verbose=True, handle_parsing_errors=True
     )
-    
+
     return agent_executor
+
 
 def run_agent(query: str):
     """
@@ -68,8 +72,4 @@ def run_agent(query: str):
     agent_executor = create_agent()
     # The structured chat agent expects a 'chat_history' variable.
     # We provide an empty list for these single-turn conversations.
-    return agent_executor.invoke({
-        "input": query,
-        "chat_history": []
-    })
-
+    return agent_executor.invoke({"input": query, "chat_history": []})
